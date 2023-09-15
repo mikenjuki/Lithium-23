@@ -2,3 +2,8 @@ body {
   background-color: #fcfcfc;
   font-family: "Inter", sans-serif;
 }
+
+table {
+  border-spacing: 0;
+  padding-left: 24px;
+}
