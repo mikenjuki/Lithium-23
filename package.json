@@ -11,8 +11,15 @@
   },
   "dependencies": {
     "@types/styled-components": "^5.1.27",
+    "axios": "^1.5.0",
+    "localforage": "^1.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
+    "react-redux": "^8.1.2",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
     "styled-components": "^6.0.8"
   },
   "devDependencies": {
