@@ -1,94 +1,67 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
-import { setPayout } from "../reducers/actions";
-import { FaSearch } from "react-icons/fa";
-import styled from "styled-components";
+import { FC, useEffect, useState } from "react";
+import { FlexContainer } from "./ui/FlexContainer";
+import { LuSearch } from "react-icons/lu";
+import { Input } from "./ui/SearchInput";
+import theme from "../theme";
+import { useSearchDataMutation } from "../store/apis/payoutDataApi";
+import { useDispatch } from "react-redux";
+import { setIsSearchEmpty, setSearchResults } from "../store";
 
-let timerId: number;
-const debounce = (fn: () => unknown, delay: number) => {
-  return (...args: unknown[]) => {
-    clearTimeout(timerId);
-    timerId = setTimeout(fn, delay, [...args]);
-  };
-};
+//colors from themes.ts
+const paleWhite = theme.colors.medleyPaleWhite;
+const medleyGray = theme.colors.medleyGray;
 
-const SearchDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const SearchInput = styled.input`
-  border: none;
-  margin-left: 5px;
-  font-size: 16px;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const Search = ({
-  setPayoutAction,
-}: {
-  setPayoutAction: (arg: []) => void;
-}) => {
+// User uses this to sort through table
+const SearchComponent: FC = () => {
+  const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResult, setSearchResult] = useState<[]>([]);
+  const [trigger, result] = useSearchDataMutation();
 
-  const changeHandler = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLInputElement;
-    setSearchTerm(target.value);
+  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchTerm(value);
   };
 
-  const fetchData = debounce(() => {
-    axios
-      .get(
-        `https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/search?query=${searchTerm}`
-      )
-      .then((result) => {
-        setSearchResult(result.data);
-      })
-      .catch((e) => console.log("UH OH", e));
-  }, 500);
-
+  // useeffects interact with slices and store to propagate data thorought the app
   useEffect(() => {
     if (searchTerm) {
-      fetchData();
+      trigger(searchTerm);
+      dispatch(setIsSearchEmpty(false));
+    } else {
+      dispatch(setIsSearchEmpty(true));
     }
   }, [searchTerm]);
 
   useEffect(() => {
-    if (searchResult?.length !== 0) {
-      setPayoutAction(searchResult);
-    }
-    // console.log("results: ", searchResult);
-  }, [searchResult]);
+    const { data } = result;
+    dispatch(setSearchResults(data));
+  }, [result]);
 
   return (
-    <SearchDiv>
-      <FaSearch style={{ color: "#6f767e" }} />
-      <SearchInput
-        type="search"
+    <FlexContainer
+      $direction="row"
+      $alignitems="center"
+      $padding="8px 16px"
+      $gap="8px"
+      $borderradius="12px"
+      $border={`2px solid ${paleWhite}`}
+      $customStyle=" /* Media query for smaller screens */
+@media screen and (max-width: 768px) {
+ padding: 6px 12px;
+ gap: 4px;
+}"
+    >
+      <LuSearch style={{ color: `${medleyGray}` }} />
+      <Input
+        placeholder="Search username"
+        type="text"
         name="search-payouts"
         id="search-payouts"
         value={searchTerm}
         onChange={changeHandler}
-        placeholder="Search Payouts"
       />
-    </SearchDiv>
+    </FlexContainer>
   );
 };
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
-    {
-      setPayoutAction: setPayout,
-    },
-    dispatch
-  );
-}
-
-export default connect(null, mapDispatchToProps)(Search);
+export default SearchComponent;

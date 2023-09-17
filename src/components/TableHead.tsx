@@ -1,30 +1,24 @@
-import styled from "styled-components";
-import { CommonTitle } from "./ui/CommonTitle";
-import { TitleChip } from "./ui/TitleChip";
-import Search from "./SearchComponent";
+import { FC } from "react";
+import { FlexContainer } from "./ui/FlexContainer";
+import { Title } from "./ui/Title";
+import { ColorTag } from "./ui/ColorTag";
+import SearchComponent from "./SearchComponent";
 
-const TableHeading = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const TableTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-`;
-
-const TableHead = () => {
+//This is the top part of the table, title and search bar
+const TableHead: FC = () => {
   return (
-    <TableHeading>
-      <TableTitle>
-        <TitleChip />
-        <CommonTitle>Payout history</CommonTitle>
-      </TableTitle>
-      {/* Search component here */}
-      <Search />
-    </TableHeading>
+    <FlexContainer
+      $direction="row"
+      $justifycontent="space-between"
+      $alignitems="center"
+      $mediaDirection="column"
+    >
+      <FlexContainer $direction="row" $gap="16px" $alignitems="center">
+        <ColorTag />
+        <Title>Payout History</Title>
+      </FlexContainer>
+      <SearchComponent />
+    </FlexContainer>
   );
 };
 

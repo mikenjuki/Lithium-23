@@ -1,17 +1,19 @@
 import { FC } from "react";
-
-import { MainTable } from "./ui/MainTable";
+import { TableContainer } from "./ui/TableContainer";
 import TableHead from "./TableHead";
 import TableBody from "./TableBody";
 
 interface TableProps {}
 
+// Beginning of table
 const Table: FC<TableProps> = () => {
   return (
-    <MainTable>
-      <TableHead />
-      <TableBody />
-    </MainTable>
+    <div>
+      <TableContainer>
+        <TableHead />
+        <TableBody />
+      </TableContainer>
+    </div>
   );
 };
 

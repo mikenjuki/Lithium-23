@@ -1,3 +1,6 @@
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyles = createGlobalStyle`
 /*
   1. Use a more-intuitive box-sizing model.
 */
@@ -27,6 +30,8 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: #fcfcfc;
+  font-family: "Inter", sans-serif;
 }
 /*
   6. Improve media defaults
@@ -67,3 +72,44 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+
+/*
+ Project specific
+*/
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    padding-left: 24px;
+    width: 100%
+
+  }
+
+  table td, table th {
+    width: 25%; /* Adjust this width*/
+  }
+
+  th {
+    text-align: left;
+  }
+
+  .table-container {
+    overflow-x: scroll;
+  }
+
+  .feedback-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+  }
+
+  .feedback-image > img {
+    width: 300px
+  }
+
+`;
+
+export default GlobalStyles;

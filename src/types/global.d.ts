@@ -1,15 +1,21 @@
-type Payout = {
+interface Payout {
   dateAndTime: string;
   status: string;
   value: string;
   username: string;
-};
-
-type InitialState = {
-  payouts: Payout[],
 }
 
-type PayoutAction = {
-  type: string
-  payload: unknown
+interface InitialData {
+  metadata: {
+    page: number;
+    limit: number;
+    totalCount: number;
+  };
+  data: Payout[];
+}
+
+interface PayoutStore {
+  payouts: Payout[];
+  searchResults: Payout[];
+  isSearchEmpty: boolean;
 }

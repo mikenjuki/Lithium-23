@@ -1,47 +1,22 @@
-import axios from "axios";
-import "./App.css";
-import Table from "./components/Table";
-import { useEffect, useState } from "react";
-
-import { PageTitle } from "./components/ui/PageTitle";
+import { ThemeProvider } from "styled-components";
 import { Wrapper } from "./components/ui/Wrapper";
-import { connect } from "react-redux";
-import { bindActionCreators, Dispatch } from "redux";
-import { setPayout } from "./reducers/actions";
+import GlobalStyles from "./globalStyles";
+import { Title } from "./components/ui/Title";
+import Table from "./components/Table";
+import theme from "./theme";
 
-function App({ setPayoutAction }) {
-  useEffect(() => {
-    axios
-      .get(
-        `https://theseus-staging.lithium.ventures/api/v1/analytics/tech-test/payouts`
-      )
-      .then((result: any) => {
-        const payouts = result.data.data.map((p: Payout) => {
-          p.dateAndTime = new Date(p.dateAndTime).toDateString();
-          return p;
-        });
-        setPayoutAction(payouts);
-      })
-      .catch((e: unknown) => console.log("UH OH", e));
-  }, []);
-
+const App = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
       <Wrapper>
-        <PageTitle>Payouts</PageTitle>
+        <Title as="h1" $ismain>
+          Payouts
+        </Title>
         <Table />
       </Wrapper>
-    </>
+    </ThemeProvider>
   );
-}
+};
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return bindActionCreators(
-    {
-      setPayoutAction: setPayout,
-    },
-    dispatch
-  );
-}
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;

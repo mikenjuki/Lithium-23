@@ -1,7 +1,12 @@
 import styled from "styled-components";
+import theme from "../../theme";
+
 interface StatusChipProps {
-  paid?: boolean;
+  $paid?: boolean;
 }
+
+const medleyGreen = theme.colors.medleyGreen;
+const medleyGray = theme.colors.medleyGray;
 
 export const StatusChip = styled.div<StatusChipProps>`
   display: flex;
@@ -14,5 +19,5 @@ export const StatusChip = styled.div<StatusChipProps>`
 
   border-radius: 6px;
   background-color: ${(props) =>
-    props.paid ? " #60ca57" : "rgba(111, 118, 126, 0.40)"};
+    props.$paid ? `${medleyGreen}` : `${medleyGray}`};
 `;
