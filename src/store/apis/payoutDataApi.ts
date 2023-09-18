@@ -20,12 +20,12 @@ const payoutDataApi = createApi({
       },
     }),
     searchDataOld: builder.query<string, string>({
-      query: (searchTerm) => {
+      query: (searchTerm: string) => {
         return { url: `/search?query=${searchTerm}`, method: "GET" };
       },
     }),
     searchData: builder.mutation({
-      query: (searchTerm) => {
+      query: (searchTerm: string) => {
         return { url: `/search?query=${searchTerm}`, method: "GET" };
       },
     }),
