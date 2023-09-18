@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+//Base url in .env for prod
+// but for test purposes, i put the raw url here
+// const lithiumUrl = import.meta.env.VITE_LITHIUM_BASE_URL;
+
 const payoutDataApi = createApi({
   reducerPath: "payoutsApi",
   baseQuery: fetchBaseQuery({
