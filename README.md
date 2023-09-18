@@ -8,5 +8,6 @@ This was built using Vite.
 
 1. Clone the repo
 2. npm i to install dependencies
+3. reload project on editor
 3. npm run dev to start the app
 
