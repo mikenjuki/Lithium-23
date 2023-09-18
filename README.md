@@ -7,6 +7,6 @@ I developed the app using  React, Redux combined with TypeScript, to closely ali
 This was built using Vite.
 
 1. Clone the repo
-2. npm i to install dependancies
+2. npm i to install dependencies
 3. npm run dev to start the app
 
